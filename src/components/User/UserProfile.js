@@ -13,8 +13,47 @@ export default class UserProfile extends Component {
   static propTypes = {};
 
   state = {
-    preview: null,
-    file: ""
+    avatar: null,
+    firstName: "",
+    lastName: "",
+    email: "",
+    sex: "",
+    file: "",
+    loading: false
+  };
+  componentDidMount = () => {
+    this.setState({ loading: true });
+    // Fake API retrieval
+    setTimeout(() => {
+      this.setState({
+        avatar: "/img/ironman.png",
+        firstName: "Thanos",
+        lastName: "",
+        email: "thanos_titan@marvel.com",
+        sex: "male",
+        file: "",
+        loading: false
+      });
+    }, 1500);
+  };
+  onChange = e => {
+    let { name, value } = e.target;
+    this.setState({ [name]: value });
+  };
+  resetState = e => {
+    e.preventDefault();
+    this.setState({
+      avatar: null,
+      firstName: "",
+      lastName: "",
+      email: "",
+      sex: "",
+      file: ""
+    });
+  };
+  onSubmit = e => {
+    e.preventDefault();
+    console.log("Form data should be saved");
   };
 
   handleImageChange = e => {
@@ -24,10 +63,9 @@ export default class UserProfile extends Component {
     let file = e.target.files[0];
 
     reader.onloadend = () => {
-      console.log("reader.result: ", reader.result);
       this.setState({
         file: file,
-        preview: reader.result
+        avatar: reader.result
       });
     };
 
@@ -35,8 +73,11 @@ export default class UserProfile extends Component {
   };
 
   render() {
-    let { preview } = this.state;
+    let { avatar, firstName, lastName, sex, email } = this.state;
 
+    if (this.state.loading) {
+      return <h1>Loading ...</h1>;
+    }
     return (
       <div className="col-sm-8 user-profile-form">
         <h1>User profile data</h1>
@@ -46,9 +87,10 @@ export default class UserProfile extends Component {
             <FormControl
               type="text"
               name="firstName"
-              value=""
+              value={firstName}
               placeholder="First Name"
               inline="true"
+              onChange={this.onChange}
             />
           </FormGroup>
           <FormGroup className="row">
@@ -56,8 +98,9 @@ export default class UserProfile extends Component {
             <FormControl
               type="text"
               name="lastName"
-              value=""
+              value={lastName}
               placeholder="Last Name"
+              onChange={this.onChange}
             />
           </FormGroup>
           <FormGroup className="row">
@@ -65,8 +108,9 @@ export default class UserProfile extends Component {
             <FormControl
               type="email"
               name="email"
-              value=""
+              value={email}
               placeholder="Email"
+              onChange={this.onChange}
             />
           </FormGroup>
           <FormLabel className="row">Sex</FormLabel>
@@ -78,6 +122,8 @@ export default class UserProfile extends Component {
                 type="radio"
                 name="sex"
                 value="male"
+                checked={sex === "male"}
+                onChange={this.onChange}
               />
               <Form.Check
                 inline
@@ -85,6 +131,8 @@ export default class UserProfile extends Component {
                 type="radio"
                 name="sex"
                 value="female"
+                checked={sex === "female"}
+                onChange={this.onChange}
               />
             </FormGroup>
           </FormGroup>
@@ -94,16 +142,20 @@ export default class UserProfile extends Component {
               type="file"
               onChange={e => this.handleImageChange(e)}
             />
-            {preview && (
+            {avatar && (
               <div className="imgPreview">
-                <img src={preview} alt="avatar" />
+                <img src={avatar} alt="avatar" />
               </div>
             )}
           </div>
           <FormGroup>
             <ButtonToolbar>
-              <Button type="submit">Submit</Button>
-              <Button type="submit">Clear Values</Button>
+              <Button type="submit" onClick={this.onSubmit}>
+                Submit
+              </Button>
+              <Button type="submit" onClick={this.resetState}>
+                Clear Values
+              </Button>
             </ButtonToolbar>
           </FormGroup>
         </Form>

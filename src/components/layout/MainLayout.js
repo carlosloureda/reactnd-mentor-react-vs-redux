@@ -4,12 +4,12 @@ import Footer from "./Footer";
 
 export default class MainLayout extends Component {
   render() {
-    console.log("this.props.children: ", this.props.children);
+    const { userName, avatar } = this.props;
     return (
       <div>
-        <Header />
+        <Header userName={userName} avatar={avatar} />
         <main>{this.props.children}</main>
-        <Footer />
+        {/* <Footer /> */}
         <link
           rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"

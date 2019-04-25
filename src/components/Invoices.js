@@ -1,9 +1,9 @@
 import React from "react";
 import "./Invoices.css";
 
-const Invoices = () => (
+const Invoices = props => (
   <div>
-    <h1>Invoices page for "Username"</h1>
+    <h1>Invoices page for {props.userName}</h1>
     <div>
       <p>On this page we would be showing user invoices, just an scheleton</p>
       <div className="invoices">

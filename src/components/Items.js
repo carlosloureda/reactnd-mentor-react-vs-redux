@@ -1,8 +1,8 @@
 import React from "react";
 
-const Items = () => (
+const Items = props => (
   <div>
-    <h1>Items page for "Username"</h1>
+    <h1>Items page for {props.userName}</h1>
     <div>
       <p>On this page we would be showing user items, like travels bought</p>
       <div className="items">
