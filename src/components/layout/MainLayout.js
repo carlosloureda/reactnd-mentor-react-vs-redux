@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import Header from "./Header";
-import Footer from "./Footer";
+// import Footer from "./Footer";
+import { store } from "../../store";
 
 export default class MainLayout extends Component {
   render() {
-    const { userName, avatar } = this.props;
+    const { userName, avatar } = store.getState();
     return (
       <div>
         <Header userName={userName} avatar={avatar} />

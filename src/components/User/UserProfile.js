@@ -8,7 +8,8 @@ import {
   Button,
   ButtonToolbar
 } from "react-bootstrap";
-import { saveAs } from "file-saver";
+import { store } from "../../store";
+import { setUserProfile } from "../../actions";
 
 export default class UserProfile extends Component {
   static propTypes = {};
@@ -59,17 +60,19 @@ export default class UserProfile extends Component {
     /* Instead of saving file as it is in local folder, everytime you submit the form it will 
     change between the default thanos avatar into the ironman avatar and the other way round */
 
-    if (this.state.isThanosAvatar) {
-      this.setState({
-        avatar: "/img/ironman.png",
-        isThanosAvatar: false
-      });
-    } else {
-      this.setState({
-        avatar: "/img/thanos.jpg",
-        isThanosAvatar: true
-      });
+    let newAvatar = this.state.isThanosAvatar
+      ? "/img/thanos.jpg"
+      : "/img/ironman.png";
+
+    this.setState(state => ({
+      avatar: newAvatar,
+      isThanosAvatar: !state.isThanosAvatar
+    }));
+    let userName = this.state.firstName;
+    if (this.state.lastName) {
+      userName = `${this.state.firstName}, ${this.state.lastName}`;
     }
+    store.dispatch(setUserProfile(userName, newAvatar));
   };
 
   handleImageChange = e => {

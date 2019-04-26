@@ -8,7 +8,9 @@ class Header extends Component {
     return (
       <header className="clearfix">
         <Navbar bg="light" expand="lg">
-          <Navbar.Brand href="#home">React State vs Redux State</Navbar.Brand>
+          <Link to="/" className="navbar-brand">
+            React State vs Redux State
+          </Link>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
