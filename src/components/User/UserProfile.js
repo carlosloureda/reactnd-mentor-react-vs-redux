@@ -8,6 +8,7 @@ import {
   Button,
   ButtonToolbar
 } from "react-bootstrap";
+import { saveAs } from "file-saver";
 
 export default class UserProfile extends Component {
   static propTypes = {};
@@ -19,20 +20,22 @@ export default class UserProfile extends Component {
     email: "",
     sex: "",
     file: "",
-    loading: false
+    loading: false,
+    isThanosAvatar: true
   };
   componentDidMount = () => {
     this.setState({ loading: true });
     // Fake API retrieval
     setTimeout(() => {
       this.setState({
-        avatar: "/img/ironman.png",
+        avatar: "/img/thanos.jpg",
         firstName: "Thanos",
         lastName: "",
         email: "thanos_titan@marvel.com",
         sex: "male",
         file: "",
-        loading: false
+        loading: false,
+        isThanosAvatar: true
       });
     }, 1500);
   };
@@ -53,7 +56,20 @@ export default class UserProfile extends Component {
   };
   onSubmit = e => {
     e.preventDefault();
-    console.log("Form data should be saved");
+    /* Instead of saving file as it is in local folder, everytime you submit the form it will 
+    change between the default thanos avatar into the ironman avatar and the other way round */
+
+    if (this.state.isThanosAvatar) {
+      this.setState({
+        avatar: "/img/ironman.png",
+        isThanosAvatar: false
+      });
+    } else {
+      this.setState({
+        avatar: "/img/thanos.jpg",
+        isThanosAvatar: true
+      });
+    }
   };
 
   handleImageChange = e => {
