@@ -24,14 +24,26 @@ export default class UserProfile extends Component {
     loading: false,
     isThanosAvatar: true
   };
+  getDataFromGlobalState = () => {
+    const { avatar, userName } = store.getState();
+    let userNameSplitted = userName.split(", ");
+    let firstName = "Thanos";
+    let lastName = "";
+    if (userNameSplitted) {
+      firstName = userNameSplitted[0];
+      lastName = userNameSplitted.length > 1 ? userNameSplitted[1] : lastName;
+    }
+    return { avatar, firstName, lastName };
+  };
   componentDidMount = () => {
     this.setState({ loading: true });
     // Fake API retrieval
+    let { avatar, firstName, lastName } = this.getDataFromGlobalState();
     setTimeout(() => {
       this.setState({
-        avatar: "/img/thanos.jpg",
-        firstName: "Thanos",
-        lastName: "",
+        avatar: avatar ? avatar : "/img/thanos.jpg",
+        firstName,
+        lastName,
         email: "thanos_titan@marvel.com",
         sex: "male",
         file: "",
@@ -61,8 +73,8 @@ export default class UserProfile extends Component {
     change between the default thanos avatar into the ironman avatar and the other way round */
 
     let newAvatar = this.state.isThanosAvatar
-      ? "/img/thanos.jpg"
-      : "/img/ironman.png";
+      ? "/img/ironman.png"
+      : "/img/thanos.jpg";
 
     this.setState(state => ({
       avatar: newAvatar,
