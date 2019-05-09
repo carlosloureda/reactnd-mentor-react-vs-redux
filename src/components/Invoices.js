@@ -1,4 +1,7 @@
 import React from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+
 import "./Invoices.css";
 import ReduxContext from "../context";
 
@@ -6,7 +9,7 @@ const Invoices = props => {
   return (
     <ReduxContext.Consumer>
       {store => {
-        const { userName } = store.getState();
+        const { userName } = props;
         return (
           <div>
             <h1>
@@ -36,4 +39,8 @@ const Invoices = props => {
   );
 };
 
-export default Invoices;
+Invoices.propTypes = {
+  userName: PropTypes.string.isRequired
+};
+
+export default connect(state => ({ userName: state.userName }))(Invoices);
