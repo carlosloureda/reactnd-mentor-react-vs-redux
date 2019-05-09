@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import Header from "./Header";
+import { connect } from "react-redux";
 // import Footer from "./Footer";
 
-export default class MainLayout extends Component {
+class MainLayout extends Component {
   render() {
     const { userName, avatar } = this.props;
 
@@ -21,3 +22,8 @@ export default class MainLayout extends Component {
     );
   }
 }
+
+export default connect(state => ({
+  userName: state.userName,
+  avatar: state.avatar
+}))(MainLayout);
