@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 
 const Items = props => {
   const { userName } = props;
@@ -24,4 +25,5 @@ const Items = props => {
     </div>
   );
 };
-export default Items;
+
+export default connect(state => ({ userName: state.userName }))(Items);

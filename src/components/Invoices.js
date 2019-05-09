@@ -6,6 +6,7 @@ import "./Invoices.css";
 
 const Invoices = props => {
   const { userName } = props;
+  console.log("[invoices] props: ", props);
   return (
     <div>
       <h1>
