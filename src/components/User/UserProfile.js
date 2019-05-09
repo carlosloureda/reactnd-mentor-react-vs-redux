@@ -8,11 +8,16 @@ import {
   Button,
   ButtonToolbar
 } from "react-bootstrap";
-import { store } from "../../store";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import { setUserProfile } from "../../actions";
 
-export default class UserProfile extends Component {
-  static propTypes = {};
+class UserProfile extends Component {
+  static propTypes = {
+    userName: PropTypes.string.isRequired,
+    avatar: PropTypes.string.isRequired,
+    setUserProfile: PropTypes.func.isRequired
+  };
 
   state = {
     avatar: null,
@@ -25,7 +30,7 @@ export default class UserProfile extends Component {
     isThanosAvatar: true
   };
   getDataFromGlobalState = () => {
-    const { avatar, userName } = store.getState();
+    const { avatar, userName } = this.props;
     let userNameSplitted = userName.split(", ");
     let firstName = "Thanos";
     let lastName = "";
@@ -36,6 +41,7 @@ export default class UserProfile extends Component {
     return { avatar, firstName, lastName };
   };
   componentDidMount = () => {
+    console.log("this.pros: ", this.props);
     this.setState({ loading: true });
     // Fake API retrieval
     let { avatar, firstName, lastName } = this.getDataFromGlobalState();
@@ -84,7 +90,8 @@ export default class UserProfile extends Component {
     if (this.state.lastName) {
       userName = `${this.state.firstName}, ${this.state.lastName}`;
     }
-    store.dispatch(setUserProfile(userName, newAvatar));
+    console.log("the userName is: ", userName);
+    this.props.setUserProfile(userName, newAvatar);
   };
 
   handleImageChange = e => {
@@ -194,3 +201,16 @@ export default class UserProfile extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  userName: state.userName,
+  avatar: state.avatar
+});
+const mapDispatchToProps = dispatch => ({
+  setUserProfile: (userName, newAvatar) =>
+    dispatch(setUserProfile(userName, newAvatar))
+});
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UserProfile);

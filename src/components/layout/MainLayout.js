@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import Header from "./Header";
+import { connect } from "react-redux";
 // import Footer from "./Footer";
-import { store } from "../../store";
 
-export default class MainLayout extends Component {
+class MainLayout extends Component {
   render() {
-    const { userName, avatar } = store.getState();
+    const { userName, avatar } = this.props;
+
     return (
       <div>
         <Header userName={userName} avatar={avatar} />
@@ -21,3 +22,8 @@ export default class MainLayout extends Component {
     );
   }
 }
+
+export default connect(state => ({
+  userName: state.userName,
+  avatar: state.avatar
+}))(MainLayout);

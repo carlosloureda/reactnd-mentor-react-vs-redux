@@ -10,26 +10,15 @@ import Items from "./components/Items";
 import "./App.css";
 
 class App extends Component {
-  state = {
-    firstName: "Thanos",
-    avatar: "/img/thanos.jpg"
-  };
-  componentDidMount() {}
+  ntDidMount() {}
   render() {
-    const { firstName, avatar } = this.state;
     return (
       <div className="App">
-        <MainLayout userName={firstName} avatar={avatar}>
+        <MainLayout>
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route
-              path="/items/"
-              render={() => <Items userName={firstName} />}
-            />
-            <Route
-              path="/invoices/"
-              render={() => <Invoices userName={firstName} />}
-            />
+            <Route path="/items/" render={() => <Items />} />
+            <Route path="/invoices/" render={() => <Invoices />} />
             <Route path="/user-profile/" component={UserProfile} />
           </Switch>
         </MainLayout>
