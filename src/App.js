@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
 
 import MainLayout from "./components/layout/MainLayout";
-import UserProfile from "./components/User/UserProfile";
+import UserProfileContainer from "./components/User/UserProfileContainer";
 import Invoices from "./components/Invoices";
 import Home from "./components/Home";
 import Items from "./components/Items";
@@ -19,7 +19,7 @@ class App extends Component {
             <Route exact path="/" component={Home} />
             <Route path="/items/" render={() => <Items />} />
             <Route path="/invoices/" render={() => <Invoices />} />
-            <Route path="/user-profile/" component={UserProfile} />
+            <Route path="/user-profile/" component={UserProfileContainer} />
           </Switch>
         </MainLayout>
       </div>
